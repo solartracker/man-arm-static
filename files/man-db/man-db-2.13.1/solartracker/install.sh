@@ -3,9 +3,8 @@
 # install.sh
 #
 # Setup the runtime environment for the portable man program.  This script
-# should be sourced inside every shell instance before using the man program.
-# It configures the PATH variable and creates a symbolic link to its own
-# isolated sysroot.
+# should be sourced (not run) before using the man program.  It configures the
+# PATH variable and creates a symbolic link to its own isolated sysroot.
 #
 # Copyright (C) 2025 Richard Elwell
 # Licensed under GPLv3 or later

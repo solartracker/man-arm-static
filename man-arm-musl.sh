@@ -1364,8 +1364,11 @@ if [ ! -f "${PKG_SOURCE_SUBDIR}/__package_installed" ]; then
         --prefix="${PREFIX}" \
         --host="${HOST}" \
         --build="${SYSTEM}" \
+        --with-pkg-config="/usr/bin/pkg-config" \
         --with-termlib \
         --with-strip-program="${STRIP}" \
+        --without-tests \
+        --without-ada \
     || handle_configure_error $?
 
     $MAKE

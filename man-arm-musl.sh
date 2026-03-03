@@ -1367,7 +1367,8 @@ if [ ! -f "${PKG_SOURCE_SUBDIR}/__package_installed" ]; then
         --with-pthread \
         --enable-pthreads-eintr \
         --enable-reentrant \
-        --with-pkg-config \
+        --enable-widec \
+        --with-pkg-config=pkg-config \
         --with-termlib \
         --disable-rpath \
         --disable-rpath-hack \

@@ -1368,6 +1368,7 @@ if [ ! -f "${PKG_SOURCE_SUBDIR}/__package_installed" ]; then
         --enable-pthreads-eintr \
         --enable-reentrant \
         --with-termlib \
+        --with-ticlib \
         --with-strip-program="${STRIP}" \
     || handle_configure_error $?
 

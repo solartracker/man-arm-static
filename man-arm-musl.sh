@@ -1374,6 +1374,31 @@ if [ ! -f "${PKG_SOURCE_SUBDIR}/__package_installed" ]; then
     $MAKE
     make install
 
+    ( # enable backward compatability for linking to non-wide libraries
+    cd "${PREFIX}/lib"
+    for lib in tinfo ncurses panel menu form ncurses++; do
+        # Symlink static libraries
+        if [ -f "lib${lib}w.a" ]; then
+            ln -sfn "lib${lib}w.a" "lib${lib}.a"
+        fi
+        if [ -f "lib${lib}w_g.a" ]; then
+            ln -sfn "lib${lib}w_g.a" "lib${lib}_g.a"
+        fi
+        # Symlink shared libraries
+        if [ -f "lib${lib}w.so" ]; then
+            ln -sfn "lib${lib}w.so" "lib${lib}.so"
+        fi
+        # Handle versioned shared libraries, e.g., libncursesw.so.6
+        for ver in lib${lib}w.so.*; do
+            [ -e "$ver" ] || continue
+            basever=$(basename "$ver")               # libncursesw.so.6
+            # Replace "w" in the name to get non-wide symlink
+            nonwname="${basever/lib${lib}w.so/lib${lib}.so}"
+            ln -sfn "$basever" "$nonwname"
+        done
+    done
+    ) #END sub-shell
+
     # strip and verify there are no dependencies for static build
     finalize_build "${PREFIX}/bin/tic" \
                    "${PREFIX}/bin/toe" \

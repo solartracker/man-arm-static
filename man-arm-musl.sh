@@ -1364,9 +1364,6 @@ if [ ! -f "${PKG_SOURCE_SUBDIR}/__package_installed" ]; then
         --prefix="${PREFIX}" \
         --host="${HOST}" \
         --build="${SYSTEM}" \
-        --with-pthread \
-        --enable-pthreads-eintr \
-        --enable-reentrant \
         --with-strip-program="${STRIP}" \
     || handle_configure_error $?
 

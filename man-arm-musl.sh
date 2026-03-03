@@ -1364,7 +1364,13 @@ if [ ! -f "${PKG_SOURCE_SUBDIR}/__package_installed" ]; then
         --prefix="${PREFIX}" \
         --host="${HOST}" \
         --build="${SYSTEM}" \
+        --with-pthread \
+        --enable-pthreads-eintr \
+        --enable-reentrant \
+        --with-pkg-config \
         --with-termlib \
+        --disable-rpath \
+        --disable-rpath-hack \
         --with-strip-program="${STRIP}" \
     || handle_configure_error $?
 

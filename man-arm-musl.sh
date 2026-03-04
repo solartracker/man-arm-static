@@ -1463,19 +1463,21 @@ fi
 )
 
 ################################################################################
-# groff-1.23.0 (host)
-(
+# groff-1.23.0
+#
+( #BEGIN groff
 PKG_NAME=groff
 PKG_VERSION=1.23.0
 PKG_SOURCE_SUBDIR="${PKG_NAME}-${PKG_VERSION}"
-PKG_HASH="6b9757f592b7518b4902eb6af7e54570bdccba37a871fddb2d30ae3863511c13"
 HOST_STAGE_DIR="${STAGE_DIR}/${SYSTEM}"
-(
+mkdir -p "${SRC_ROOT}/${PKG_NAME}"
+
+( #BEGIN groff (download)
+PKG_BUILD_SUBDIR="${PKG_SOURCE_SUBDIR}-download"
 PKG_SOURCE="${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_SOURCE_URL="https://ftp.gnu.org/gnu/groff/${PKG_SOURCE}"
-PKG_BUILD_SUBDIR="${PKG_SOURCE_SUBDIR}-build-host"
+PKG_HASH="6b9757f592b7518b4902eb6af7e54570bdccba37a871fddb2d30ae3863511c13"
 
-mkdir -p "${SRC_ROOT}/${PKG_NAME}"
 cd "${SRC_ROOT}/${PKG_NAME}"
 
 if [ ! -f "${PKG_BUILD_SUBDIR}/__package_installed" ]; then
@@ -1483,6 +1485,23 @@ if [ ! -f "${PKG_BUILD_SUBDIR}/__package_installed" ]; then
     verify_hash "${PKG_SOURCE}" "${PKG_HASH}"
     unpack_archive "${PKG_SOURCE}" "${PKG_SOURCE_SUBDIR}"
 
+    rm -rf "${PKG_BUILD_SUBDIR}"
+    mkdir "${PKG_BUILD_SUBDIR}"
+    cd "${PKG_BUILD_SUBDIR}"
+
+    touch __package_installed
+fi
+) #END groff (download)
+
+################################################################################
+# groff (host tools)
+#
+( #BEGIN groff (host tools)
+PKG_BUILD_SUBDIR="${PKG_SOURCE_SUBDIR}-build-host"
+
+cd "${SRC_ROOT}/${PKG_NAME}"
+
+if [ ! -f "${PKG_BUILD_SUBDIR}/__package_installed" ]; then
     rm -rf "${PKG_BUILD_SUBDIR}"
     mkdir "${PKG_BUILD_SUBDIR}"
     cd "${PKG_BUILD_SUBDIR}"
@@ -1500,11 +1519,12 @@ if [ ! -f "${PKG_BUILD_SUBDIR}/__package_installed" ]; then
 
     touch __package_installed
 fi
-)
+) #END groff (host tools)
 
 ################################################################################
-# groff-1.23.0 (target)
-(
+# groff (target)
+#
+( #BEGIN groff (target)
 PKG_BUILD_SUBDIR="${PKG_SOURCE_SUBDIR}-build-target"
 
 cd "${SRC_ROOT}/${PKG_NAME}"
@@ -1564,7 +1584,7 @@ if [ ! -f "${PKG_BUILD_SUBDIR}/__package_installed" ]; then
     touch __package_installed
 fi
 ) #END groff (target)
-) #END groff (host)
+) #END groff
 
 ################################################################################
 # gdbm-1.26
